@@ -54,3 +54,23 @@ test('Correctly ignore random values (2)', () => {
     ]);
     expect(randomVal.getVal('random-3')).not.toBe('random-3');
 });
+
+test('Correctly distribute values', () => {
+    const RUN_TIMES = 2000;
+    const randomVal = new RandomVal([
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+    ]);
+    const hitCount = [0, 0, 0, 0, 0, 0, 0];
+    for (let i = 0; i < RUN_TIMES; i++) {
+        hitCount[randomVal.getVal()]++;
+    }
+    const max = Math.max.apply(Math, hitCount);
+    const min = Math.min.apply(Math, hitCount);
+    expect(((max - min) / RUN_TIMES)).toBeLessThan(0.1);
+});
