@@ -1,0 +1,25 @@
+{
+  "name": "random-val",
+  "version": "0.0.1",
+  "description": "A useless library that gives you random stuff",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r1cebank/random-val.git"
+  },
+  "author": "Siyuan Gao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/r1cebank/random-val/issues"
+  },
+  "homepage": "https://github.com/r1cebank/random-val#readme",
+  "devDependencies": {
+    "babel-jest": "^18.0.0",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "jest": "^18.1.0"
+  }
+}
