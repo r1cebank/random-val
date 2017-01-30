@@ -2,6 +2,7 @@ import RandomVal from '../index.js';
 
 test('Correctly generate randomVal instance', () => {
     expect(typeof (new RandomVal())).toBe('object');
+    expect((new RandomVal()).currentIndex).toBe(0);
     expect((new RandomVal()).constructor.name).toBe('RandomVal');
     expect(Array.isArray(new RandomVal().values)).toBeTruthy();
 });
@@ -25,6 +26,14 @@ test('Correctly add given values', () => {
     expect(randomVal.values.length).toBe(2);
 });
 
+test('Correctly give index values', () => {
+    const randomVal = new RandomVal([
+        'random-0',
+        'random-1'
+    ]);
+    expect(randomVal.get(0)).toBe('random-0');
+});
+
 test('Correctly give random values', () => {
     const randomVal = new RandomVal([
         'random-0',
@@ -40,6 +49,43 @@ test('Correctly ignore random values', () => {
     ]);
     expect(randomVal.getVal('random-0')).not.toBe('random-0');
     expect(randomVal.getVal('random-0')).toBe('random-1');
+});
+
+test('Correctly get round robin values', () => {
+    const randomVal = new RandomVal([
+        'random-0'
+    ]);
+    expect(randomVal.getRoundRobin()).toBe('random-0');
+    expect(randomVal.getRoundRobin()).toBe('random-0');
+});
+
+test('Correctly get round robin values (2)', () => {
+    const randomVal = new RandomVal([
+        'random-0',
+        'random-1',
+        'random-2',
+        'random-3',
+        'random-4'
+    ]);
+    expect(randomVal.getRoundRobin()).toBe('random-0');
+    expect(randomVal.getRoundRobin()).toBe('random-1');
+    expect(randomVal.getRoundRobin()).toBe('random-2');
+    expect(randomVal.getRoundRobin()).toBe('random-3');
+    expect(randomVal.getRoundRobin()).toBe('random-4');
+    expect(randomVal.getRoundRobin()).toBe('random-0');
+});
+
+test('Correctly reset round robin', () => {
+    const randomVal = new RandomVal([
+        'random-0',
+        'random-1',
+        'random-2',
+        'random-3',
+        'random-4'
+    ]);
+    expect(randomVal.getRoundRobin()).toBe('random-0');
+    randomVal.resetRoundRobin();
+    expect(randomVal.getRoundRobin()).toBe('random-0');
 });
 
 test('Correctly ignore random values (2)', () => {
