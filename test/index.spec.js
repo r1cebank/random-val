@@ -16,6 +16,15 @@ test('Correctly give initial values', () => {
     expect(randomVal.values.length).toBe(2);
 });
 
+test('Correctly add given values', () => {
+    const randomVal = new RandomVal();
+    randomVal.add('random-0');
+    randomVal.add('random-1');
+    expect(randomVal.values[0]).toBe('random-0');
+    expect(randomVal.values[1]).toBe('random-1');
+    expect(randomVal.values.length).toBe(2);
+});
+
 test('Correctly give random values', () => {
     const randomVal = new RandomVal([
         'random-0',
