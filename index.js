@@ -11,7 +11,10 @@ class RandomVal {
     get(index) {
         return this.values[index];
     }
-    getVal(ignored) {
+    getVal() {
+        return this.getExcept();
+    }
+    getExcept(ignored) {
         if (ignored && this.values.includes(ignored)) {
             const ignoredIndex = this.values.indexOf(ignored);
             const valueClone = this.values.slice(0);

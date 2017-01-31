@@ -34,6 +34,44 @@ test('Correctly give index values', () => {
     expect(randomVal.get(0)).toBe('random-0');
 });
 
+test('Support object types', () => {
+    const randomVal = new RandomVal([
+        new RandomVal(['random-0']),
+        new RandomVal(['random-1'])
+    ]);
+    expect(randomVal.values[0].getExcept()).toBe('random-0');
+    expect(randomVal.values[1].getExcept()).toBe('random-1');
+    expect(randomVal.values.length).toBe(2);
+});
+
+test('Support object except', () => {
+    const val1 = { url: 'xxx' };
+    const val2 = { url: 'zzz' };
+    const randomVal = new RandomVal([
+        val1,
+        val2
+    ]);
+    expect(randomVal.getExcept(val1)).toBe(val2);
+});
+
+test('Support object get', () => {
+    const val1 = { url: 'xxx' };
+    const val2 = { url: 'zzz' };
+    const randomVal = new RandomVal([
+        val1,
+        val2
+    ]);
+    expect(typeof randomVal.getVal()).toBe('object');
+});
+
+test('Correctly give random values', () => {
+    const randomVal = new RandomVal([
+        'random-0',
+        'random-1'
+    ]);
+    expect(randomVal.values.includes(randomVal.getExcept())).toBeTruthy();
+});
+
 test('Correctly give random values', () => {
     const randomVal = new RandomVal([
         'random-0',
@@ -47,8 +85,8 @@ test('Correctly ignore random values', () => {
         'random-0',
         'random-1'
     ]);
-    expect(randomVal.getVal('random-0')).not.toBe('random-0');
-    expect(randomVal.getVal('random-0')).toBe('random-1');
+    expect(randomVal.getExcept('random-0')).not.toBe('random-0');
+    expect(randomVal.getExcept('random-0')).toBe('random-1');
 });
 
 test('Correctly get round robin values', () => {
@@ -98,7 +136,7 @@ test('Correctly ignore random values (2)', () => {
         'random-5',
         'random-6',
     ]);
-    expect(randomVal.getVal('random-3')).not.toBe('random-3');
+    expect(randomVal.getExcept('random-3')).not.toBe('random-3');
 });
 
 test('Correctly distribute values', () => {
@@ -114,7 +152,7 @@ test('Correctly distribute values', () => {
     ]);
     const hitCount = [0, 0, 0, 0, 0, 0, 0];
     for (let i = 0; i < RUN_TIMES; i++) {
-        hitCount[randomVal.getVal()]++;
+        hitCount[randomVal.getExcept()]++;
     }
     const max = Math.max.apply(Math, hitCount);
     const min = Math.min.apply(Math, hitCount);

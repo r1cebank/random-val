@@ -17,5 +17,5 @@ serverList.add('http://xxx.xx.com');
 serverList.add('http://xxy.xx.com');
 
 // Getting a random value
-serverList.getVal(); // http://xxx.xx.com
+serverList.getExcept(); // http://xxx.xx.com
 ```
