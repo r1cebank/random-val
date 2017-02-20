@@ -35,4 +35,4 @@ class RandomVal {
     }
 }
 
-export default RandomVal;
+module.exports = RandomVal;
